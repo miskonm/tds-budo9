@@ -1,5 +1,6 @@
+using TDS.Infrastructure.Locator;
+using TDS.Infrastructure.State;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace TDS.Infrastructure
 {
@@ -7,10 +8,11 @@ namespace TDS.Infrastructure
     {
         #region Unity lifecycle
 
-        private void Start()
+        private void Awake()
         {
-            Debug.Log("Bootstrapper Start");
-            SceneManager.LoadScene("GameScene");
+            StateMachine sm = new();
+            ServicesLocator.Instance.Register(sm);
+            sm.Enter<BootstrapState>();
         }
 
         #endregion
