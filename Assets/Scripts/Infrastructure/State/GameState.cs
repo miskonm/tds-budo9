@@ -1,4 +1,4 @@
-using UnityEngine;
+using TDS.Utils.Log;
 
 namespace TDS.Infrastructure.State
 {
@@ -8,7 +8,7 @@ namespace TDS.Infrastructure.State
 
         public override void Enter()
         {
-            Debug.Log("GameState Enter");
+            this.Log();
         }
 
         public override void Exit() { }

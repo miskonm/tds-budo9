@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 5229359479038434188}
   - component: {fileID: 6820896686652089975}
   - component: {fileID: 150088257714333580}
-  m_Layer: 0
-  m_Name: Bullet
+  m_Layer: 9
+  m_Name: PlayerBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -49,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rb: {fileID: 6820896686652089975}
   _speed: 10
+  _lifetime: 3
 --- !u!50 &6820896686652089975
 Rigidbody2D:
   serializedVersion: 4
@@ -131,7 +132,7 @@ GameObject:
   m_Component:
   - component: {fileID: 353772081938081667}
   - component: {fileID: 6521158733769154218}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Shot
   m_TagString: Untagged
   m_Icon: {fileID: 0}

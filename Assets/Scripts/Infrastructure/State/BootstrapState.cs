@@ -1,6 +1,6 @@
-using TDS.Infrastructure.Locator;
+using TDS.Service.Coroutine;
 using TDS.Service.SceneLoading;
-using UnityEngine;
+using TDS.Utils.Log;
 
 namespace TDS.Infrastructure.State
 {
@@ -10,9 +10,10 @@ namespace TDS.Infrastructure.State
 
         public override void Enter()
         {
-            Debug.Log("BootstrapState Enter");
+            this.Log();
 
-            ServicesLocator.Instance.Register(new SceneLoaderService());
+            ServicesLocator.Register(new SceneLoaderService());
+            ServicesLocator.RegisterMono<CoroutineRunner>();
 
             StateMachine.Enter<LoadGameState>();
         }
