@@ -29,7 +29,7 @@ namespace TDS.Game.Enemy
 
         private void OnDisable()
         {
-            _rb.velocity = Vector2.zero;
+            ResetVelocity();
         }
 
         #endregion
@@ -39,6 +39,11 @@ namespace TDS.Game.Enemy
         public override void SetTarget(Transform target)
         {
             _target = target;
+
+            if (target == null)
+            {
+                ResetVelocity();
+            }
         }
 
         #endregion
@@ -49,7 +54,13 @@ namespace TDS.Game.Enemy
         {
             Vector2 velocity = transform.up * _speed;
             _rb.velocity = velocity;
-            // _animation.SetMovement(direction.magnitude);
+            Animation.SetSpeed(_speed);
+        }
+
+        private void ResetVelocity()
+        {
+            _rb.velocity = Vector2.zero;
+            Animation.SetSpeed(0);
         }
 
         private void Rotate()
