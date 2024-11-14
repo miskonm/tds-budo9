@@ -1,11 +1,20 @@
-using TDS.Game.Common;
+using TDS.Game.Enemy.Base;
 using UnityEngine;
 
 namespace TDS.Service.Mission.Conditions
 {
     public class KillEnemyMissionCondition : MissionCondition
     {
-        [SerializeField] private UnitHp _enemyUnitHp;
-        
+        #region Variables
+
+        [SerializeField] private EnemyDeath _enemyDeath;
+
+        #endregion
+
+        #region Properties
+
+        public EnemyDeath EnemyDeath => _enemyDeath;
+
+        #endregion
     }
 }

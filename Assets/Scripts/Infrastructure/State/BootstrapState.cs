@@ -17,7 +17,7 @@ namespace TDS.Infrastructure.State
             ServicesLocator.RegisterMono<MissionService>();
             ServicesLocator.RegisterMono<CoroutineRunner>();
 
-            StateMachine.Enter<LoadGameState>();
+            StateMachine.Enter<LoadGameState, string>(SceneName.Game);
         }
 
         public override void Exit() { }
