@@ -52,6 +52,22 @@ namespace TDS.Infrastructure.Locator
             return component;
         }
 
+        public TService RegisterMono<TService, TImplementation>() where TImplementation : MonoBehaviour, TService
+            where TService : IService
+        {
+            Type typeService = typeof(TService);
+
+            Assert.IsFalse(_services.ContainsKey(typeService),
+                $"Can't register service '{typeService.Name}' because it's already registered.");
+
+            Type typeImplementation = typeof(TImplementation);
+            GameObject go = new(typeImplementation.Name);
+            Object.DontDestroyOnLoad(go);
+            TImplementation component = go.AddComponent<TImplementation>();
+            _services.Add(typeService, component);
+            return component;
+        }
+
         public void UnRegister<T>() where T : IService
         {
             _services.Remove(typeof(T));

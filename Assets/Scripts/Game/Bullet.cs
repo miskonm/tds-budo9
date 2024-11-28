@@ -25,7 +25,7 @@ namespace TDS.Game
                 hp.Change(-_damage);
             }
 
-            LeanPool.Despawn(gameObject);
+            GamePool.Despawn(gameObject);
         }
 
         #endregion
@@ -52,7 +52,7 @@ namespace TDS.Game
         {
             yield return new WaitForSeconds(_lifetime);
 
-            LeanPool.Despawn(gameObject);
+            GamePool.Despawn(gameObject);
         }
 
         #endregion

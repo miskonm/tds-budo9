@@ -1,3 +1,4 @@
+using TDS.Service.Input;
 using UnityEngine;
 
 namespace TDS.Game
@@ -13,21 +14,30 @@ namespace TDS.Game
         [SerializeField] private Rigidbody2D _rb;
         [SerializeField] private float _speed = 10;
 
-        private Camera _camera;
+        private IInputService _inputService;
 
         #endregion
 
         #region Unity lifecycle
 
-        private void Start()
-        {
-            _camera = Camera.main;
-        }
-
         private void Update()
         {
+            if (_inputService == null)
+            {
+                return;
+            }
+
             Move();
             Rotate();
+        }
+
+        #endregion
+
+        #region Public methods
+
+        public void Construct(IInputService inputService)
+        {
+            _inputService = inputService;
         }
 
         #endregion
@@ -36,20 +46,14 @@ namespace TDS.Game
 
         private void Move()
         {
-            float horizontal = Input.GetAxis("Horizontal");
-            float vertical = Input.GetAxis("Vertical");
-            Vector2 direction = new(horizontal, vertical);
-            Vector2 velocity = direction.normalized * _speed;
+            Vector2 velocity = _inputService.MoveDirection * _speed;
             _rb.velocity = velocity;
-            _animation.SetMovement(direction.magnitude);
+            _animation.SetMovement(velocity.magnitude);
         }
 
         private void Rotate()
         {
-            Vector3 mousePosition = Input.mousePosition;
-            Vector3 mouseWorldPoint = _camera.ScreenToWorldPoint(mousePosition);
-            mouseWorldPoint.z = transform.position.z;
-            transform.up = mouseWorldPoint - transform.position;
+            transform.up = _inputService.LookDirection;
         }
 
         #endregion
