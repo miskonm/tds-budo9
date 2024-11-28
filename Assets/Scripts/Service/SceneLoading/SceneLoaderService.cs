@@ -1,9 +1,8 @@
-using TDS.Infrastructure.Locator;
 using UnityEngine.SceneManagement;
 
 namespace TDS.Service.SceneLoading
 {
-    public class SceneLoaderService : IService
+    public class SceneLoaderService
     {
         #region Public methods
 
@@ -11,8 +10,8 @@ namespace TDS.Service.SceneLoading
         {
             SceneManager.LoadScene(sceneName);
         }
-        
-        public void LoadAsync(string sceneName){}
+
+        public void LoadAsync(string sceneName) { }
 
         #endregion
     }

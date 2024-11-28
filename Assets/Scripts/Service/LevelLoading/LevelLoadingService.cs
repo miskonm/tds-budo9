@@ -1,11 +1,10 @@
-using TDS.Infrastructure.Locator;
 using TDS.Infrastructure.State;
 using TDS.Utils.Log;
 using UnityEngine;
 
 namespace TDS.Service.LevelLoading
 {
-    public class LevelLoadingService : IService
+    public class LevelLoadingService
     {
         #region Variables
 
