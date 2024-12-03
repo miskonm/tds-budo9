@@ -1,5 +1,6 @@
 using TDS.Service.Input;
 using UnityEngine;
+using Zenject;
 
 namespace TDS.Game
 {
@@ -18,31 +19,26 @@ namespace TDS.Game
 
         #endregion
 
-        #region Unity lifecycle
+        #region Setup/Teardown
 
-        private void Start()
+        [Inject]
+        public void Construct(IInputService inputService)
         {
-            // TODO: Nikita fix it
-            // _inputService.OnAttacked += AttackedCallback;
-        }
-
-        private void OnDestroy()
-        {
-            if (_inputService != null)
-            {
-                _inputService.OnAttacked -= AttackedCallback;
-            }
+            _inputService = inputService;
         }
 
         #endregion
 
-        #region Public methods
+        #region Unity lifecycle
 
-        public void Construct(IInputService inputService)
+        private void Start()
         {
-            _inputService = inputService;
-            // TODO: Nikita this is kostil
             _inputService.OnAttacked += AttackedCallback;
+        }
+
+        private void OnDestroy()
+        {
+            _inputService.OnAttacked -= AttackedCallback;
         }
 
         #endregion

@@ -1,16 +1,15 @@
-using TDS.Infrastructure.Locator;
 using TDS.Service.LevelLoading;
 using TDS.Service.Mission;
 using TDS.Utils.Log;
 
 namespace TDS.Service.LevelCompletion
 {
-    public class LevelCompletionService : IService
+    public class LevelCompletionService
     {
         #region Variables
 
-        private readonly MissionService _missionService;
         private readonly LevelLoadingService _levelLoadingService;
+        private readonly MissionService _missionService;
 
         #endregion
 
@@ -52,7 +51,7 @@ namespace TDS.Service.LevelCompletion
             else
             {
                 // TODO:
-                this.Error($"GAME OVER!");
+                this.Error("GAME OVER!");
             }
         }
 

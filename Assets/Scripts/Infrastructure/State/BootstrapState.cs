@@ -1,10 +1,6 @@
-using TDS.Service.Coroutine;
-using TDS.Service.Input;
-using TDS.Service.LevelCompletion;
 using TDS.Service.LevelLoading;
-using TDS.Service.Mission;
+using TDS.Service.UI;
 using TDS.Utils.Log;
-using UnityEngine;
 
 namespace TDS.Infrastructure.State
 {
@@ -13,15 +9,17 @@ namespace TDS.Infrastructure.State
         #region Variables
 
         private readonly LevelLoadingService _levelLoadingService;
+        private readonly UIService _uiService;
 
         #endregion
 
         #region Setup/Teardown
 
-        public BootstrapState(LevelLoadingService levelLoadingService)
+        public BootstrapState(LevelLoadingService levelLoadingService, UIService uiService)
         {
             this.Error($"levelLoadingService '{levelLoadingService}'");
             _levelLoadingService = levelLoadingService;
+            _uiService = uiService;
         }
 
         #endregion
@@ -32,20 +30,10 @@ namespace TDS.Infrastructure.State
         {
             this.Error($"_levelLoadingService '{_levelLoadingService}'");
 
-            MissionService missionService = ServicesLocator.RegisterMono<MissionService>();
-            ServicesLocator.Register(new LevelCompletionService(missionService, _levelLoadingService));
-            ServicesLocator.RegisterMono<CoroutineRunner>();
-
-            if (Application.isEditor || !Application.isMobilePlatform)
-            {
-                ServicesLocator.RegisterMono<IInputService, PCInputService>();
-            }
-            else
-            {
-                ServicesLocator.Register<IInputService>(new MobileInputService());
-            }
-
+            _uiService.Initialize();
             _levelLoadingService.Initialize();
+            
+            
             _levelLoadingService.EnterFirstLevel();
         }
 

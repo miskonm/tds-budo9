@@ -27,6 +27,7 @@ namespace TDS.Utils.Log
 
         private static string FormatMessage(Type type, string memberName, object message)
         {
+            // TODO: Multitrteading
             string prefix = Application.isEditor
                 ? $"[{Time.frameCount}]"
                 : $"[{DateTime.Now.ToString("HH:mm:ss")} : {Time.frameCount}]";

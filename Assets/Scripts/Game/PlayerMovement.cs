@@ -1,5 +1,7 @@
 using TDS.Service.Input;
+using TDS.Utils.Log;
 using UnityEngine;
+using Zenject;
 
 namespace TDS.Game
 {
@@ -18,6 +20,17 @@ namespace TDS.Game
 
         #endregion
 
+        #region Setup/Teardown
+
+        [Inject]
+        public void Construct(IInputService inputService)
+        {
+            this.Error();
+            _inputService = inputService;
+        }
+
+        #endregion
+
         #region Unity lifecycle
 
         private void Update()
@@ -29,15 +42,6 @@ namespace TDS.Game
 
             Move();
             Rotate();
-        }
-
-        #endregion
-
-        #region Public methods
-
-        public void Construct(IInputService inputService)
-        {
-            _inputService = inputService;
         }
 
         #endregion

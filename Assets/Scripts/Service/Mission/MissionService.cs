@@ -1,12 +1,10 @@
 using System;
-using TDS.Infrastructure.Locator;
-using TDS.Utils.Log;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace TDS.Service.Mission
 {
-    public class MissionService : MonoBehaviour, IService
+    public class MissionService : MonoBehaviour
     {
         #region Variables
 

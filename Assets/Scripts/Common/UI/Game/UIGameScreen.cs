@@ -1,9 +1,10 @@
 using TDS.Game.UI;
+using TDS.Service.UI;
 using UnityEngine;
 
-namespace TDS.UI
+namespace TDS.Common.UI.Game
 {
-    public class GameScreen : MonoBehaviour
+    public class UIGameScreen : UIScreen
     {
         #region Variables
 

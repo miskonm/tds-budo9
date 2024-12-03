@@ -1,42 +1,64 @@
+using TDS.Common.UI.Game;
 using TDS.Game;
 using TDS.Game.Common;
 using TDS.Service.Input;
 using TDS.Service.LevelCompletion;
 using TDS.Service.Mission;
-using TDS.UI;
 using TDS.Utils.Log;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace TDS.Infrastructure.State
 {
     public class GameState : AppState
     {
+        #region Variables
+
+        private readonly GameScreenController _gameScreenController;
+
+        private readonly IInputService _inputService;
+
+        private readonly LevelCompletionService _levelCompletionService;
+        private readonly MissionService _missionService;
+
+        #endregion
+
+        #region Setup/Teardown
+
+        public GameState(LevelCompletionService levelCompletionService, MissionService missionService,
+            IInputService inputService, GameScreenController gameScreenController)
+        {
+            _levelCompletionService = levelCompletionService;
+            _missionService = missionService;
+            _inputService = inputService;
+            _gameScreenController = gameScreenController;
+        }
+
+        #endregion
+
         #region Public methods
 
         public override void Enter()
         {
             this.Log();
-            ServicesLocator.Get<LevelCompletionService>().Initialize();
-            ServicesLocator.Get<MissionService>().Initialize();
-            ServicesLocator.Get<MissionService>().Begin();
-            
-            GameScreen gameScreen = Object.FindObjectOfType<GameScreen>();
+
+            _levelCompletionService.Initialize();
+            _missionService.Initialize();
+            _missionService.Begin();
+
             PlayerMovement playerMovement = Object.FindObjectOfType<PlayerMovement>();
             UnitHp playerHp = playerMovement.GetComponent<UnitHp>();
-            gameScreen.PlayerHpBar.Construct(playerHp);
+            _gameScreenController.OpenScreen(playerHp);
 
-            IInputService inputService = ServicesLocator.Get<IInputService>();
-            inputService.Initialize(Camera.main, playerMovement.transform);
-
-            playerMovement.Construct(inputService);
-            playerMovement.GetComponent<PlayerAttack>().Construct(inputService);
+            _inputService.Initialize(Camera.main, playerMovement.transform);
         }
 
         public override void Exit()
         {
-            ServicesLocator.Get<MissionService>().Dispose();
-            ServicesLocator.Get<LevelCompletionService>().Dispose();
-            ServicesLocator.Get<IInputService>().Dispose();
+            _missionService.Dispose();
+            _levelCompletionService.Dispose();
+            _inputService.Dispose();
+            _gameScreenController.CloseScreen();
         }
 
         #endregion

@@ -9,16 +9,18 @@ namespace TDS.Infrastructure.State
     {
         #region Variables
 
+        private readonly CoroutineRunner _coroutineRunner;
         private readonly SceneLoaderService _sceneLoaderService;
 
         #endregion
 
         #region Setup/Teardown
 
-        public LoadGameState(SceneLoaderService sceneLoaderService)
+        public LoadGameState(SceneLoaderService sceneLoaderService, CoroutineRunner coroutineRunner)
         {
             this.Error("NON Empty");
             _sceneLoaderService = sceneLoaderService;
+            _coroutineRunner = coroutineRunner;
         }
 
         #endregion
@@ -30,7 +32,7 @@ namespace TDS.Infrastructure.State
             this.Error($"_sceneLoaderService '{_sceneLoaderService}'");
             _sceneLoaderService.Load(sceneName);
 
-            ServicesLocator.Get<CoroutineRunner>().StartCoroutine(EnterGameWithDelay());
+            _coroutineRunner.StartCoroutine(EnterGameWithDelay());
         }
 
         public override void Exit() { }

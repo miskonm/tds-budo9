@@ -1,10 +1,9 @@
 using System;
-using TDS.Infrastructure.Locator;
 using UnityEngine;
 
 namespace TDS.Service.Input
 {
-    public interface IInputService : IService
+    public interface IInputService
     {
         #region Events
 
